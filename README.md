@@ -84,7 +84,7 @@ evaluator.evaluate()
 ### Plots
 The following methods can be used to generate plots:
 ```python
-# Set single_row to True if using less than 3 datasets. 
+# Set single_row to True if using less than 4 datasets. 
 # This example uses 'Accuracy' as the metric, but you can use any metric specified in the config file.
 # Set use_pgf to True if you want to output plots as PGF files (make sure you have the appropriate LateX packages installed).
 
