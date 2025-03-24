@@ -213,7 +213,7 @@ benchmark:
           name: "NextAttributeClassification"
     metrics:
       - name: "Accuracy"
-      - name: "LASS"
+      - name: "PRS"
       - name: "Precision"
       - name: "Recall"
       - name: "F1Score"

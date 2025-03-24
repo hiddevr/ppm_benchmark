@@ -9,7 +9,6 @@ class Accuracy(BaseMetric):
 
     def _predictions_from_probas(self, prediction_probas):
         preds = [max(d, key=d.get) for d in prediction_probas]
-        print(preds)
         return preds
 
     def evaluate(self, predictions, targets):

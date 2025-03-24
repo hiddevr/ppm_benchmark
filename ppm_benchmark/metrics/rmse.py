@@ -8,4 +8,4 @@ class RMSE(BaseMetric):
         super().__init__('RMSE')
 
     def evaluate(self, predictions, targets):
-        return root_mean_squared_error(list(targets), list(predictions), squared=False)
+        return mean_squared_error(list(targets), list(predictions), squared=False)

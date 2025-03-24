@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 import numpy as np
 import pandas as pd
-from ppm_benchmark.utils.outcome_ltl_parser import EvaluatorWithPosition, Lexer, Parser
-from ppm_benchmark.utils.el_splitter import ELSplitter
-from ppm_benchmark.utils.logger import setup_logger
+from ..utils.outcome_ltl_parser import EvaluatorWithPosition, Lexer, Parser
+from ..utils.el_splitter import ELSplitter
+from ..utils.logger import setup_logger
 import random
 
 logger = setup_logger(__name__)
@@ -78,6 +78,8 @@ class BaseDatasetNormalizer(ABC):
         pass
 
     def normalize_and_split(self, df, task_type, start_date, end_date, outcome_ltl_rule=None, attr_col=None):
+        df['time:timestamp'] = pd.to_datetime(df['time:timestamp'], utc=True)
+
         if task_type == 'next_attribute':
             df = self.normalize_next_attribute(df)
             df = self.calc_next_attribute_target(df, attr_col)

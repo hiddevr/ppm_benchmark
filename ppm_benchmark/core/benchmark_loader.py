@@ -25,8 +25,8 @@ class BenchmarkLoader:
         return config
 
     def _get_datasets(self, config):
-        normalizer_module = importlib.import_module('ppm_benchmark.DatasetNormalizers')
-        loader_module = importlib.import_module('ppm_benchmark.DatasetLoaders')
+        normalizer_module = importlib.import_module('ppm_benchmark.dataset_normalizers')
+        loader_module = importlib.import_module('ppm_benchmark.dataset_loaders')
         datasets = []
         for dataset in config['datasets']:
             normalizer = getattr(normalizer_module, dataset['dataset_normalizer'])
@@ -40,7 +40,7 @@ class BenchmarkLoader:
         return datasets
 
     def _get_metrics(self, config):
-        module = importlib.import_module('ppm_benchmark.Metrics')
+        module = importlib.import_module('ppm_benchmark.metrics')
         metrics = []
         for metric in config['benchmark']['metrics']:
             cls = getattr(module, metric['name'])
@@ -48,7 +48,7 @@ class BenchmarkLoader:
         return metrics
 
     def _get_task_generator(self, task):
-        module = importlib.import_module('ppm_benchmark.TaskGenerators')
+        module = importlib.import_module('ppm_benchmark.task_generators')
         task_generator = task['task_generator']
         cls = getattr(module, task_generator['name'])
         return cls()

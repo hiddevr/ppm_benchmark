@@ -1,5 +1,6 @@
 import re
 
+# Token types
 TOKENS = {
     'LPAREN': r'\(',
     'RPAREN': r'\)',
@@ -14,6 +15,7 @@ TOKENS = {
 }
 
 
+# Lexer class
 class Lexer:
     def __init__(self, input_string):
         self.input_string = input_string
@@ -24,7 +26,6 @@ class Lexer:
         idx = 0
         while idx < len(self.input_string):
             match = None
-            # Skip over whitespace characters (spaces, tabs, etc.)
             if self.input_string[idx].isspace():
                 idx += 1
                 continue
@@ -38,14 +39,13 @@ class Lexer:
                     break
 
             if not match:
-                # If no valid token is found, provide a more informative error message
                 if idx < len(self.input_string):
                     raise SyntaxError(
                         f"Unexpected character '{self.input_string[idx]}' at position {idx}: {self.input_string}")
                 else:
                     raise SyntaxError(f"Unexpected end of input at position {idx}")
 
-        self.tokens.append(('EOF', None))  # End of input token
+        self.tokens.append(('EOF', None))
 
 
 class ASTNode:
@@ -109,7 +109,7 @@ class Parser:
         if token[0] == 'ACTIVITY':
             self.consume('ACTIVITY')
             return Activity(token[1])
-        elif token[0] == 'NOT':
+        elif token[0] == 'NOT':  # Handle NOT in atom
             self.consume('NOT')
             return UnaryOp('NOT', self.atom())
         elif token[0] == 'EVENTUALLY':
@@ -138,14 +138,14 @@ class Evaluator:
         if isinstance(node, Activity):
             return node.name in case_activities
         elif isinstance(node, UnaryOp):
-            if node.operator == 'F':
+            if node.operator == 'F':  # Eventually
                 for i in range(len(case_activities)):
                     if self.evaluate(node.operand, case_activities[i:]):
                         return True
                 return False
-            elif node.operator == 'G':
+            elif node.operator == 'G':  # Globally
                 return all(self.evaluate(node.operand, case_activities[i:]) for i in range(len(case_activities)))
-            elif node.operator == 'X':
+            elif node.operator == 'X':  # Next
                 return self.evaluate(node.operand, case_activities[1:]) if len(case_activities) > 1 else False
             elif node.operator == 'NOT':
                 return not self.evaluate(node.operand, case_activities)
@@ -154,7 +154,7 @@ class Evaluator:
                 return self.evaluate(node.left, case_activities) and self.evaluate(node.right, case_activities)
             elif node.operator == '||':
                 return self.evaluate(node.left, case_activities) or self.evaluate(node.right, case_activities)
-            elif node.operator == 'U':
+            elif node.operator == 'U':  # Until
                 for i in range(len(case_activities)):
                     if self.evaluate(node.right, case_activities[i:]):
                         return all(self.evaluate(node.left, case_activities[j:i]) for j in range(i))

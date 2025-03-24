@@ -1,6 +1,11 @@
 import pandas as pd
-from ppm_benchmark.evaluation.plot_generator import PlotGenerator
+from .plot_generator import PlotGenerator
+import numpy as np
+from sklearn.exceptions import UndefinedMetricWarning
+import warnings
 
+warnings.filterwarnings(action="ignore", category=UndefinedMetricWarning)
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 
 class Evaluator:
 
@@ -25,7 +30,7 @@ class Evaluator:
             self.evaluation_df = pd.concat([self.evaluation_df, bl_series], axis=1)
         return
 
-    def add_predictions(self, task_name, predictions, model_name):
+    def add_predictions(self, task_name, predictions, model_name, drop_type, drop_indices=None):
         if model_name not in self.models:
             self.models.append(model_name)
 
@@ -35,18 +40,32 @@ class Evaluator:
                 pred_row = dict()
                 for target_name, proba in prediction_probas.items():
                     pred_row[f'{model_name}_{target_name}'] = proba
+
                 pred_row[f'{model_name}'] = prediction_probas
                 pred_rows.append(pred_row)
         else:
             pred_rows = [{f'{model_name}': pred} for pred in predictions]
 
-        task_indices = self.evaluation_df[self.evaluation_df['task_name'] == task_name].index
-        preds_df = pd.DataFrame(pred_rows, index=task_indices)
+        task_df = self.evaluation_df[self.evaluation_df['task_name'] == task_name].copy()
+        print(f'Length before: {len(task_df)}')
+        if drop_type == 'first':
+            pred_mask = task_df.groupby('case_id')['test_index'].transform('min') != task_df['test_index']
+        elif drop_type == 'last':
+            pred_mask = task_df.groupby('case_id')['test_index'].transform('max') != task_df['test_index']
+        elif drop_type == 'from_indices':
+            pred_mask = ~task_df.reset_index().index.isin(drop_indices)
+        else:
+            pred_mask = np.ones(len(task_df), dtype=bool)
+
+        pred_indices = task_df.loc[pred_mask].index
+        print(f'Length after: {len(pred_indices)}')
+        preds_df = pd.DataFrame(pred_rows, index=pred_indices)
         for column in preds_df.columns:
             if column in self.evaluation_df.columns:
                 self.evaluation_df.loc[preds_df.index, column] = preds_df[column]
             else:
-                self.evaluation_df[column] = preds_df[column]
+                self.evaluation_df[column] = np.nan
+                self.evaluation_df.loc[preds_df.index, column] = preds_df[column]
 
         self.update_colors()
         return
@@ -78,10 +97,14 @@ class Evaluator:
         return pd.DataFrame(results)
 
     def update_colors(self):
-        colors = ['blue', 'red', 'green', 'orange', 'yellow']
-        baselines = [name for name in self.baselines.values()]
-        legend_items = self.models + baselines
-        self.color_mappings = {model: color for model, color in zip(legend_items, colors)}
+        baseline_colors = ['#AFCBFF', '#87CFFF', '#70B7FF']
+        model_colors = ['#FF7043', '#00B36F', '#006DFF']
+
+        for i, baseline in enumerate(self.baselines.values()):
+            self.color_mappings[baseline] = baseline_colors[i]
+
+        for i, model in enumerate(self.models):
+            self.color_mappings[model] = model_colors[i]
 
     def get_metric(self, metric_name):
         plot_metric = None
@@ -91,33 +114,44 @@ class Evaluator:
                 break
         return plot_metric
 
-    def init_plot(self, metric_name, plot_items):
+    def init_plot(self, metric_name, models, save, use_pgf, single_row, task_type='XXXXXX'):
+        self.plot_generator.initialize(task_type, save, use_pgf, single_row)
         plot_metric = self.get_metric(metric_name)
-        plot_df = self.evaluation_df.dropna(subset=plot_items).copy()
+        print(f'plot_df length before dropping nan: {len(self.evaluation_df)}')
+        plot_df = self.evaluation_df.dropna(subset=models).copy()
+        print(f'plot_df length after dropping nan: {len(plot_df)}')
         #if 'outcome_satisfied' in plot_df.columns:
         #    plot_df.drop(plot_df[plot_df['outcome_satisfied'] == True].index, inplace=True).copy()
         inv_baselines = {v: k for k, v in self.baselines.items()}
-        plot_names = [inv_baselines[item] if item in inv_baselines else item for item in plot_items]
+        plot_names = [inv_baselines[item] if item in inv_baselines else item for item in models]
 
         plot_dict = dict()
-        for item_name, plot_name in zip(plot_items, plot_names):
-            plot_dict[f'{item_name}'] = f'{plot_name}'
+        for model_name, plot_name in zip(models, plot_names):
+            plot_dict[f'{model_name}'] = f'{plot_name}'
 
         return plot_df, plot_metric, plot_dict
 
-    def plot_attr_drift(self, metric_name):
-        plot_items = self.models + [name for name in self.baselines.values()]
-        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items)
-        self.plot_generator.plot_attr_drift(plot_metric, self.evaluation_df, self.color_mappings, plot_dict)
+    def _get_file_extension(self, use_pgf):
+        if (use_pgf):
+            file_extension = 'pgf'
+        else:
+            file_extension = 'png'
+        return file_extension
 
-    def plot_by_train_distance(self, metric_name):
+    def plot_attr_drift(self, metric_name, task_type, save=True, use_pgf=False, single_row=False):
+        plot_file_name = f'attr_drift_{task_type}_{metric_name}_{"_".join(self.models)}.{self._get_file_extension(use_pgf)}'
         plot_items = self.models + [name for name in self.baselines.values()]
-        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items)
-        print(plot_df)
-        self.plot_generator.plot_by_train_distance(plot_metric, plot_df, plot_dict, self.color_mappings)
+        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items, save, use_pgf, single_row, task_type)
+        self.plot_generator.plot_attr_drift(plot_metric, self.evaluation_df, self.color_mappings, plot_dict, plot_file_name)
 
-    def plot_by_fraction_completed(self, metric_name):
+    def plot_by_train_distance(self, metric_name, task_type, save=True, use_pgf=False, single_row=False):
+        plot_file_name = f'train_distance_{task_type}_{metric_name}_{"_".join(self.models)}.{self._get_file_extension(use_pgf)}'
         plot_items = self.models + [name for name in self.baselines.values()]
-        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items)
-        print(plot_df)
-        self.plot_generator.plot_by_fraction_completed(plot_metric, plot_df, plot_dict, self.color_mappings)
+        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items, save, use_pgf, single_row, task_type)
+        self.plot_generator.plot_by_train_distance(plot_metric, plot_df, plot_dict, self.color_mappings, plot_file_name)
+
+    def plot_by_fraction_completed(self, metric_name, task_type, save=True, use_pgf=False, single_row=False):
+        plot_file_name = f'fraction_completed_{task_type}_{metric_name}_{"_".join(self.models)}.{self._get_file_extension(use_pgf)}'
+        plot_items = self.models + [name for name in self.baselines.values()]
+        plot_df, plot_metric, plot_dict = self.init_plot(metric_name, plot_items, save, use_pgf, single_row, task_type)
+        self.plot_generator.plot_by_fraction_completed(plot_metric, plot_df, plot_dict, self.color_mappings, plot_file_name)

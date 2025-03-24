@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from .base_task_generator import BaseTaskGenerator
-from ppm_benchmark.utils.logger import setup_logger
+from ..utils.logger import setup_logger
 
 logger = setup_logger(__name__)
 
@@ -37,10 +37,9 @@ class Task:
         return evaluation_data
 
     def get_train_data(self):
-        train_df = pd.read_csv(os.path.join('benchmarks', self.save_folder, 'train.csv'))
+        train_df = pd.read_csv(os.path.join(self.save_folder, 'train.csv'), low_memory=False)
         return train_df
 
     def get_test_data(self):
-        print('Getting test data!')
-        test_df = pd.read_csv(os.path.join('benchmarks', self.save_folder, 'test.csv'))
+        test_df = pd.read_csv(os.path.join(self.save_folder, 'test.csv'), low_memory=False)
         return test_df

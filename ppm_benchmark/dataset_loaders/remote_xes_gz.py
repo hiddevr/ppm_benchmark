@@ -21,7 +21,7 @@ class RemoteXesGz(BaseDatasetLoader):
     def load_data(self, url):
         with tempfile.TemporaryDirectory() as temp_dir:
             filename = self._download_file(url, temp_dir)
-            extracted_xes_file = self._extract_gz_file(filename, 'downloaded.xes')
+            extracted_xes_file = self._extract_gz_file(filename, os.path.join(temp_dir, 'downloaded.xes'))
             event_log = pm4py.read_xes(extracted_xes_file)
             df = pm4py.convert_to_dataframe(event_log)
             return df

@@ -1,6 +1,5 @@
 from ppm_benchmark.models.base_task_generator import BaseTaskGenerator
-import random
-from ppm_benchmark.utils.logger import setup_logger
+from ..utils.logger import setup_logger
 import random
 
 logger = setup_logger(__name__)

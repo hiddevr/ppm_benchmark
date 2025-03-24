@@ -1,5 +1,5 @@
-from .task import Task
-from ppm_benchmark.evaluation.evaluator import Evaluator
+import os
+import pickle
 
 
 class TaskNotFoundError(Exception):
@@ -24,3 +24,10 @@ class Benchmark:
 
     def get_evaluator(self):
         return self.evaluator
+
+    def save(self, folder_path, name):
+        file_path = os.path.join(folder_path, f"{name}.pkl")
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+        with open(file_path, 'wb') as file:
+            pickle.dump(self, file)

@@ -1,5 +1,4 @@
 from .accuracy import Accuracy
-from .lass import LASS
 from .mae import MAE
 from .correlation import Correlation
 from .mse import MSE
@@ -8,3 +7,4 @@ from .precision import Precision
 from .recall import Recall
 from .f1_score import F1Score
 from .damerau_levenshtein import DamerauLevenshtein
+from .prs import PRS
