@@ -1,0 +1,54 @@
+datasets:
+  - name: "bpi_2020_domestic"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/6a0a26d2-82d0-4018-b1cd-89afb0e8627f/6eeb0328-f991-48c7-95f2-35033504036e"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_domestic_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: null
+    ltl_rule:
+      name: "bpi_2020_domestic eventually approved"
+      rule: "F(Declaration_FINAL_APPROVED_by_SUPERVISOR)"
+
+  - name: "bpi_2020_payments"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/a6f651a7-5ce0-4bc6-8be1-a7747effa1cc/7b1f2e56-e4a8-43ee-9a09-6e64f45a1a98"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_payments_outcome_classification"
+    split_details:
+      start_date: '2017-01'
+      end_date: null
+    ltl_rule:
+      name: "bpi_2020_payments eventually approved"
+      rule: "F Request_For_Payment_FINAL_APPROVED_by_SUPERVISOR"
+
+benchmark:
+    task_type: "outcome"
+    attr_col: null
+    evaluator: "OutcomeClassification"
+    name: "Outcome Classification Benchmark"
+    save_folder: "outcome_classification"
+    tasks:
+      - name: "bpi_2020_domestic_outcome_classification"
+        save_folder: "outcome_classification/bpi_2020_domestic_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2020_payments_outcome_classification"
+        save_folder: "outcome_classification/bpi_2020_payments_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+    metrics:
+      - name: "Accuracy"
+      - name: "LASS"
+      - name: "Precision"
+      - name: "Recall"
+      - name: "F1Score"

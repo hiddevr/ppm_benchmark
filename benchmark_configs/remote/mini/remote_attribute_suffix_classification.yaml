@@ -1,0 +1,45 @@
+datasets:
+  - name: "bpi_2015_1"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/6f35269e-4ce7-4bc4-9abb-b3cea04cad00/2c8d5827-3e08-471d-98e2-6ffdec92f958"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_1_activity_suffix"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2015_3"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/d6741425-5f62-4a59-92c5-08bae64b4611/21b574ab-02ba-4dfb-badc-bb46ce0edc44"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_3_activity_suffix"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+benchmark:
+    task_type: "attribute_suffix"
+    name: "Attribute Suffix Classification Benchmark"
+    save_folder: "attribute_suffix_classification"
+    attr_col: "concept:name"
+    keywords_dict: null
+    evaluator: "AttributeSuffixClassification"
+
+    tasks:
+      - name: "bpi_2015_1_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2015_1_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2015_3_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2015_3_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+    metrics:
+      - name: "DamerauLevenshtein"

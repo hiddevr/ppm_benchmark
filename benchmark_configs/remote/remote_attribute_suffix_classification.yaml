@@ -1,0 +1,216 @@
+datasets:
+  - name: "bpi_2012"
+    dataset_normalizer: "BPI2012Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/533f66a4-8911-4ac7-8612-1235d65d1f37/3276db7f-8bee-4f2b-88ee-92dbffb5a893"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2012_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2014"
+    dataset_normalizer: "BPI2014Normalizer"
+    dataset_loader: "RemoteCSV"
+    data_path: "https://data.4tu.nl/file/657fb1d6-b4c2-4adc-ba48-ed25bf313025/bd6cfa31-44f8-4542-9bad-f1f70c894728"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2014_activity_suffix"
+    split_details:
+      start_date: '2013-10'
+      end_date: null
+
+  - name: "bpi_2015_1"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/6f35269e-4ce7-4bc4-9abb-b3cea04cad00/2c8d5827-3e08-471d-98e2-6ffdec92f958"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_1_activity_suffix"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2015_3"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/d6741425-5f62-4a59-92c5-08bae64b4611/21b574ab-02ba-4dfb-badc-bb46ce0edc44"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_3_activity_suffix"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2015_5"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/32b70553-0765-4808-b155-aa5319802c8a/d39e1365-e4b8-4cb8-83d3-0b01cbf6f8c2"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_5_activity_suffix"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2017"
+    dataset_normalizer: "BPI2017Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/34c3f44b-3101-4ea9-8281-e38905c68b8d/f3aec4f7-d52c-4217-82f4-57d719a8298c"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2017_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2019"
+    dataset_normalizer: "BPI2019Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/35ed7122-966a-484e-a0e1-749b64e3366d/864493d1-3a58-47f6-ad6f-27f95f995828"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2019_activity_suffix"
+    split_details:
+      start_date: '2018-01'
+      end_date: '2019-02'
+
+  - name: "bpi_2020_domestic"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/6a0a26d2-82d0-4018-b1cd-89afb0e8627f/6eeb0328-f991-48c7-95f2-35033504036e"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_domestic_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2020_payments"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/a6f651a7-5ce0-4bc6-8be1-a7747effa1cc/7b1f2e56-e4a8-43ee-9a09-6e64f45a1a98"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_payments_activity_suffix"
+    split_details:
+      start_date: '2017-01'
+      end_date: null
+
+  - name: "bpi_2020_travel_cost"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/fb84cf2d-166f-4de2-87be-62ee317077e5/612068f6-14d0-4a82-b118-1b51db52e73a"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_travel_cost_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "helpdesk"
+    dataset_normalizer: "HelpdeskNormalizer"
+    dataset_loader: "RemoteCSV"
+    data_path: "https://data.4tu.nl/file/94ee26c8-78f6-4387-b32b-f028f2103a2c/697ff9af-fca0-4363-bd84-e81735d27e9f"
+    is_remote: true
+    data_owner: "Mirko Polato"
+    tasks:
+      - name: "helpdesk_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "traffic_fine"
+    dataset_normalizer: "TrafficFineNormalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/806acd1a-2bf2-4e39-be21-69b8cad10909/b234b06c-4d4f-4055-9f14-6218e3906d82"
+    is_remote: true
+    data_owner: "Massimiliano de Leoni, Felix Mannhardt"
+    tasks:
+      - name: "traffic_fine_activity_suffix"
+    split_details:
+      start_date: null
+      end_date: '2012-12'
+
+benchmark:
+    task_type: "attribute_suffix"
+    name: "Attribute Suffix Classification Benchmark"
+    save_folder: "attribute_suffix_classification"
+    attr_col: "concept:name"
+    keywords_dict: null
+    evaluator: "AttributeSuffixClassification"
+
+    tasks:
+      - name: "bpi_2012_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2012_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2014_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2014_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2015_1_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2015_1_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2015_3_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2015_3_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2015_5_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2015_5_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2017_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2017_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2019_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2019_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2020_domestic_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2020_domestic_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2020_payments_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2020_payments_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "bpi_2020_travel_cost_activity_suffix"
+        save_folder: "attribute_suffix_classification/bpi_2020_travel_cost_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "helpdesk_activity_suffix"
+        save_folder: "attribute_suffix_classification/helpdesk_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+      - name: "traffic_fine_activity_suffix"
+        save_folder: "attribute_suffix_classification/traffic_fine_activity_suffix_task"
+        task_generator:
+          name: "AttributeSuffixClassification"
+
+    metrics:
+      - name: "DamerauLevenshtein"

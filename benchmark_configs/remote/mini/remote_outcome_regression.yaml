@@ -1,0 +1,52 @@
+datasets:
+  - name: "bpi_2015_1"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/6f35269e-4ce7-4bc4-9abb-b3cea04cad00/2c8d5827-3e08-471d-98e2-6ffdec92f958"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_1_outcome_regression"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+    ltl_rule:
+      name: "Remaining time"
+      rule: "REMAINING_TIME"
+
+  - name: "bpi_2015_2"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/372d0cad-3fb1-4627-8ea9-51a09923d331/d653a8ec-4cd1-4029-8b61-6cfde4f4a666"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_2_outcome_regression"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+    ltl_rule:
+      name: "Remaining time"
+      rule: "REMAINING_TIME"
+
+benchmark:
+    task_type: "outcome"
+    attr_col: null
+    evaluator: "OutcomeRegression"
+    name: "Outcome Regression Benchmark"
+    save_folder: "outcome_regression"
+    tasks:
+      - name: "bpi_2015_1_outcome_regression"
+        save_folder: "outcome_regression/bpi_2015_1_outcome_regression_task"
+        task_generator:
+          name: "OutcomeRegression"
+
+      - name: "bpi_2015_2_outcome_regression"
+        save_folder: "outcome_regression/bpi_2015_2_outcome_regression_task"
+        task_generator:
+          name: "OutcomeRegression"
+    metrics:
+      - name: "MAE"
+      - name: "RMSE"
+      - name: "MSE"
+      - name: "Correlation"

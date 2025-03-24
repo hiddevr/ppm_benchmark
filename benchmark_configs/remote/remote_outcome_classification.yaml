@@ -1,0 +1,159 @@
+datasets:
+  - name: "bpi_2012"
+    dataset_normalizer: "BPI2012Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/533f66a4-8911-4ac7-8612-1235d65d1f37/3276db7f-8bee-4f2b-88ee-92dbffb5a893"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2012_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: null
+    ltl_rule:
+      name: "bpi_2012 application eventually approved"
+      rule: "G(!A_APPROVED_COMPLETE || G(!A_DECLINED_COMPLETE))"
+
+  - name: "bpi_2017"
+    dataset_normalizer: "BPI2017Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/34c3f44b-3101-4ea9-8281-e38905c68b8d/f3aec4f7-d52c-4217-82f4-57d719a8298c"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2017_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: null
+    ltl_rule:
+      name: "bpi_2017 application cancelled"
+      rule: "F(A_Cancelled && G(!(A_Pending || A_Denied)))"
+
+  - name: "bpi_2019"
+    dataset_normalizer: "BPI2019Normalizer"
+    dataset_loader: "RemoteXes"
+    data_path: "https://data.4tu.nl/file/35ed7122-966a-484e-a0e1-749b64e3366d/864493d1-3a58-47f6-ad6f-27f95f995828"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2019_outcome_classification"
+    split_details:
+      start_date: '2018-01'
+      end_date: '2019-02'
+    ltl_rule:
+      name: "bpi_2019 order rejected"
+      rule: "F (Delete_Purchase_Order_Item || Block_Purchase_Order_Item || Change_Rejection_Indicator)"
+
+  - name: "bpi_2020_domestic"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/6a0a26d2-82d0-4018-b1cd-89afb0e8627f/6eeb0328-f991-48c7-95f2-35033504036e"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_domestic_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: null
+    ltl_rule:
+      name: "bpi_2020_domestic eventually approved"
+      rule: "F(Declaration_FINAL_APPROVED_by_SUPERVISOR)"
+
+  - name: "bpi_2020_payments"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/a6f651a7-5ce0-4bc6-8be1-a7747effa1cc/7b1f2e56-e4a8-43ee-9a09-6e64f45a1a98"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_payments_outcome_classification"
+    split_details:
+      start_date: '2017-01'
+      end_date: null
+    ltl_rule:
+      name: "bpi_2020_payments eventually approved"
+      rule: "F Request_For_Payment_FINAL_APPROVED_by_SUPERVISOR"
+
+  - name: "bpi_2020_travel_cost"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/fb84cf2d-166f-4de2-87be-62ee317077e5/612068f6-14d0-4a82-b118-1b51db52e73a"
+    is_remote: true
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_travel_cost_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: null
+    ltl_rule:
+      name: "bpi_2020_travel_cost eventually approved"
+      rule: "F Permit_FINAL_APPROVED_by_SUPERVISOR && F Permit_APPROVED_by_BUDGET_OWNER"
+
+  - name: "traffic_fine"
+    dataset_normalizer: "TrafficFineNormalizer"
+    dataset_loader: "RemoteXesGz"
+    data_path: "https://data.4tu.nl/file/806acd1a-2bf2-4e39-be21-69b8cad10909/b234b06c-4d4f-4055-9f14-6218e3906d82"
+    is_remote: true
+    data_owner: "Massimiliano de Leoni, Felix Mannhardt"
+    tasks:
+      - name: "traffic_fine_outcome_classification"
+    split_details:
+      start_date: null
+      end_date: '2012-12'
+    ltl_rule:
+      name: "traffic_fine appeal"
+      rule: "F Add_penalty"
+
+benchmark:
+    task_type: "outcome"
+    attr_col: null
+    evaluator: "OutcomeClassification"
+    name: "Outcome Classification Benchmark"
+    save_folder: "outcome_classification"
+    tasks:
+      - name: "bpi_2012_outcome_classification"
+        save_folder: "outcome_classification/bpi_2012_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2017_outcome_classification"
+        save_folder: "outcome_classification/bpi_2017_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2019_outcome_classification"
+        save_folder: "outcome_classification/bpi_2019_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2020_domestic_outcome_classification"
+        save_folder: "outcome_classification/bpi_2020_domestic_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2020_payments_outcome_classification"
+        save_folder: "outcome_classification/bpi_2020_payments_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "bpi_2020_travel_cost_outcome_classification"
+        save_folder: "outcome_classification/bpi_2020_travel_cost_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "helpdesk_outcome_classification"
+        save_folder: "outcome_classification/helpdesk_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+      - name: "traffic_fine_outcome_classification"
+        save_folder: "outcome_classification/traffic_fine_outcome_classification_task"
+        task_generator:
+          name: "OutcomeClassification"
+
+    metrics:
+      - name: "Accuracy"
+      - name: "LASS"
+      - name: "Precision"
+      - name: "Recall"
+      - name: "F1Score"

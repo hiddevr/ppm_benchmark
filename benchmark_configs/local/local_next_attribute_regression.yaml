@@ -1,0 +1,220 @@
+datasets:
+  - name: "bpi_2012"
+    dataset_normalizer: "BPI2012Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI_Challenge_2012.xes/BPI_Challenge_2012.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2012_next_attribute"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2014"
+    dataset_normalizer: "BPI2014Normalizer"
+    dataset_loader: "LocalCSV"
+    data_path: "../raw_eventlogs/BPI_Challenge_2014_Detail_Incident_Activity.csv"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2014_next_attribute"
+    split_details:
+      start_date: '2013-10'
+      end_date: null
+
+  - name: "bpi_2015_1"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPIC15_1.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_1_next_attribute"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2015_3"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPIC15_3.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_3_next_attribute"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2015_5"
+    dataset_normalizer: "BPI2015Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPIC15_5.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2015_5_next_attribute"
+    split_details:
+      start_date: '2010-10'
+      end_date: null
+
+  - name: "bpi_2017"
+    dataset_normalizer: "BPI2017Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI Challenge 2017.xes/BPI Challenge 2017.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2017_next_attribute"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2019"
+    dataset_normalizer: "BPI2019Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI_Challenge_2019.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2019_next_attribute"
+    split_details:
+      start_date: '2018-01'
+      end_date: '2019-02'
+
+  - name: "bpi_2020_domestic"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI_Challenge_2020_DomesticDeclarations.xes/DomesticDeclarations.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_domestic_next_attribute"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "bpi_2020_payments"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI_Challenge_2020_RequestForPayment.xes/RequestForPayment.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_payments_next_attribute"
+    split_details:
+      start_date: '2017-01'
+      end_date: null
+
+  - name: "bpi_2020_travel_cost"
+    dataset_normalizer: "BPI2020Normalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/BPI_Challenge_2020_PrepaidTravelCost.xes/PrepaidTravelCost.xes"
+    is_remote: false
+    data_owner: "Boudewijn van Dongen"
+    tasks:
+      - name: "bpi_2020_travel_cost_next_attribute"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "helpdesk"
+    dataset_normalizer: "HelpdeskNormalizer"
+    dataset_loader: "LocalCSV"
+    data_path: "../raw_eventlogs/helpdesk.csv"
+    is_remote: false
+    data_owner: "Mirko Polato"
+    tasks:
+      - name: "helpdesk_next_attribute"
+    split_details:
+      start_date: null
+      end_date: null
+
+  - name: "traffic_fine"
+    dataset_normalizer: "TrafficFineNormalizer"
+    dataset_loader: "LocalXes"
+    data_path: "../raw_eventlogs/Road_Traffic_Fine_Management_Process.xes/Road_Traffic_Fine_Management_Process.xes"
+    is_remote: false
+    data_owner: "Massimiliano de Leoni, Felix Mannhardt"
+    tasks:
+      - name: "traffic_fine_next_attribute"
+    split_details:
+      start_date: null
+      end_date: '2012-12'
+
+
+
+benchmark:
+    task_type: "next_attribute"
+    name: "Next Timestamp Benchmark"
+    save_folder: "next_attribute_regression"
+    attr_col: "time:timestamp"
+    keywords_dict: null
+    evaluator: "NextAttributeRegression"
+
+    tasks:
+      - name: "bpi_2012_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2012_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2014_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2014_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2015_1_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2015_1_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2015_3_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2015_3_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2015_5_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2015_5_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2017_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2017_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2019_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2019_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2020_domestic_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2020_domestic_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2020_payments_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2020_payments_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "bpi_2020_travel_cost_next_attribute"
+        save_folder: "next_attribute_regression/bpi_2020_travel_cost_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "helpdesk_next_attribute"
+        save_folder: "next_attribute_regression/helpdesk_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+
+      - name: "traffic_fine_next_attribute"
+        save_folder: "next_attribute_regression/traffic_fine_next_attribute_regression_task"
+        task_generator:
+          name: "NextAttributeRegression"
+    metrics:
+      - name: "MAE"
+      - name: "RMSE"
+      - name: "MSE"
+      - name: "Correlation"
