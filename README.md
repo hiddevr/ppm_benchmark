@@ -7,7 +7,7 @@ It is recommended to use this package with **Python 3.8**. This is because this 
 - [sequence_matcher.py](ppm_benchmark/utils/sequence_matcher.py)
 
 Run the following command from the project root to install this package and its dependencies:
-```
+```shell
 pip install .
 ```
 
@@ -26,7 +26,7 @@ This package works using [YAML configuration files](benchmark_configs). In these
 
 ## Generating tasks
 After creating a configuration file, you can run the code below to generate benchmark tasks. This will automatically save all generated tasks/datasets in the current directory.
-```
+```python
 from ppm_benchmark.core.benchmark_loader import BenchmarkLoader
 
 
@@ -38,7 +38,7 @@ tasks = benchmark.get_tasks()
 
 You can then load the generated tasks using:
 
-```
+```python
 from ppm_benchmark.core.benchmark_loader import BenchmarkLoader
 
 loader = BenchmarkLoader()
@@ -47,14 +47,14 @@ task_names = benchmark.get_tasks()
 ```
 
 Then load a task using its name:
-```
+```python
 task = benchmark.load_task(task_names[0])
 train = task.get_train_data()
 ```
 
 ## Evaluation
 For classification tasks, you need to submit your predictions to the Evaluator in a list of dict with the labels as keys and predicted probabilities as values:
-```
+```python
 result = [
     {"class_A": 0.80, "class_B": 0.20},
     {"class_A": 0.75, "class_B": 0.25},
@@ -64,7 +64,7 @@ result = [
 For regression tasks, simply pass a list of predictions.
 
 Then add your predictions to the evaluator as follows:
-```
+```python
 from ppm_benchmark.core.benchmark_loader import BenchmarkLoader
 
 
@@ -77,13 +77,13 @@ You can add multiple models by simply calling the add_predictions() method multi
 
 ### Raw metrics
 Calling this will output a dataframe with the scores for all models on all metrics specified in the configuration file:
-```
+```python
 evaluator.evaluate()
 ```
 
 ### Plots
 The following methods can be used to generate plots:
-```
+```python
 # Set single_row to True if using less than 3 datasets. 
 # This example uses 'Accuracy' as the metric, but you can use any metric specified in the config file.
 # Set use_pgf to True if you want to output plots as PGF files (make sure you have the appropriate LateX packages installed).
